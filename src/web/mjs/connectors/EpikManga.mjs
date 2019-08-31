@@ -29,7 +29,17 @@ export default class EpikManga extends Connector {
     }
 
     _getChapterList( manga, callback ) {
-        callback(new Error('Not implemented!'), undefined);
+        let chapterList = [
+            {
+                id: manga.id + '/ch1',
+                title: manga.title + ' - Chapter 001'
+            },
+            {
+                id: manga.id + '/ch2',
+                title: manga.title + ' - Chapter 002'
+            }
+        ];
+        callback( null, chapterList );
     }
 
     _getPageList( manga, chapter, callback ) {
