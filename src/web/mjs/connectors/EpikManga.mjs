@@ -29,17 +29,22 @@ export default class EpikManga extends Connector {
     }
 
     _getChapterList( manga, callback ) {
-        let chapterList = [
-            {
-                id: manga.id + '/ch1',
-                title: manga.title + ' - Chapter 001'
-            },
-            {
-                id: manga.id + '/ch2',
-                title: manga.title + ' - Chapter 002'
-            }
-        ];
-        callback( null, chapterList );
+        let request = new Request( this.url + manga.id, this.requestOptions );
+        this.fetchDOM( request, 'table.table tbody tr td:first-of-type a' )
+            .then( data => {
+                let chapterList = data.map( element => {
+                    return {
+                        id: this.getRootRelativeOrAbsoluteLink( element, request.url ),
+                        title: element.text.trim(),
+                        language: ''
+                    };
+                } );
+                callback( null, chapterList );
+            } )
+            .catch( error => {
+                console.error( error, manga );
+                callback( error, undefined );
+            } );
     }
 
     _getPageList( manga, chapter, callback ) {
