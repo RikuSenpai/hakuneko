@@ -11,7 +11,17 @@ export default class EpikManga extends Connector {
     }
 
     _getMangaList( callback ) {
-        callback(new Error('Not implemented!'), undefined);
+        let mangaList = [
+            {
+                id: 'dragonball',
+                title: 'Tutorial: Dragonball'
+            },
+            {
+                id: 'onepiece',
+                title: 'Tutorial: One Piece'
+            }
+        ];
+        callback( null, mangaList );
     }
 
     _getChapterList( manga, callback ) {
