@@ -48,6 +48,10 @@ export default class EpikManga extends Connector {
     }
 
     _getPageList( manga, chapter, callback ) {
-        callback(new Error('Not implemented!'), undefined);
+        let pageList = [
+            'https://www.epikmanga.com/upload/manga/god-of-martial-arts/1.1/02.jpg',
+            'https://www.epikmanga.com/upload/manga/god-of-martial-arts/1.1/04.jpg'
+        ];
+        callback( null, pageList );
     }
 }
