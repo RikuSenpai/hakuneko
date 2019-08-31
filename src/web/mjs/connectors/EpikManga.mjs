@@ -11,17 +11,21 @@ export default class EpikManga extends Connector {
     }
 
     _getMangaList( callback ) {
-        let mangaList = [
-            {
-                id: 'dragonball',
-                title: 'Tutorial: Dragonball'
-            },
-            {
-                id: 'onepiece',
-                title: 'Tutorial: One Piece'
-            }
-        ];
-        callback( null, mangaList );
+        let request = new Request( this.url + '/seri-listesi?type=text', this.requestOptions );
+        this.fetchDOM( request, 'div#pop-href div[id^=char-] a' )
+            .then( data => {
+                let mangaList = data.map( element => {
+                    return {
+                        id: this.getRootRelativeOrAbsoluteLink( element, request.url ),
+                        title: element.text.trim()
+                    };
+                } );
+                callback( null, mangaList );
+            } )
+            .catch( error => {
+                console.error( error, this );
+                callback( error, undefined );
+            } );
     }
 
     _getChapterList( manga, callback ) {
