@@ -12,9 +12,13 @@ export default class EpikManga extends Connector {
     }
 
     _getMangaFromURI( uri ) {
-        let id = '/seri/god-of-martial-arts';
-        let title = 'God of Martial Arts';
-        return Promise.resolve( new Manga( this, id, title ) );
+        let request = new Request( uri, this.requestOptions );
+        return this.fetchDOM( request, 'head title' )
+            .then( data => {
+                let id = uri.pathname;
+                let title = data[0].text.split(' | ')[0].trim();
+                return Promise.resolve( new Manga( this, id, title ) );
+            } );
     }
 
     _getMangaList( callback ) {
