@@ -1,4 +1,5 @@
 import Connector from '../engine/Connector.mjs';
+import Manga from '../engine/Manga.mjs';
 
 export default class EpikManga extends Connector {
 
@@ -8,6 +9,12 @@ export default class EpikManga extends Connector {
         super.label = 'Epik Manga';
         this.tags = [ 'webtoon', 'turkish' ];
         this.url = 'https://www.epikmanga.com';
+    }
+
+    _getMangaFromURI( uri ) {
+        let id = '/seri/god-of-martial-arts';
+        let title = 'God of Martial Arts';
+        return Promise.resolve( new Manga( this, id, title ) );
     }
 
     _getMangaList( callback ) {
